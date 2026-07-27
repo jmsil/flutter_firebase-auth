@@ -6,7 +6,6 @@ class CustomTheme {
   static const double largeSpacing = 16;
   static const double xLargeSpacing = 24;
   static const double xxLargeSpacing = 48;
-  static const double xxxLargeSpacing = 128;
 
   static const SizedBox xLargeVerticalSpacer = SizedBox(height: xLargeSpacing);
 
@@ -14,6 +13,7 @@ class CustomTheme {
   static const Color overHighlightColor = Colors.black;
   static const Color backgroundColor = Color(0xFF121212);
   static const Color containerBackgroundColor = Color(0xFF212121);
+  static final Color textSelectionColor = Colors.lightBlueAccent.withValues(alpha: 0.4);
 
   static final TextStyle screenTitleStyle = TextStyle(
     color: highlightColor.withValues(alpha: 0.75), fontSize: 32

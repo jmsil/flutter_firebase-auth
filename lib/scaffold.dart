@@ -16,7 +16,7 @@ abstract class CustomScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Widget titleWidget = Row(
+    final Widget builtTitleWidget = Row(
       spacing: CustomTheme.largeSpacing,
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -25,28 +25,26 @@ abstract class CustomScaffold extends StatelessWidget {
       ]
     );
 
-    final Widget childWidget = Center(
-      child: Container(
-        width: 800,
-        height: expandChildContainer ? null : 480,
-        padding: const EdgeInsets.all(32),
-        clipBehavior: Clip.hardEdge,
-        decoration: BoxDecoration(
-          color: CustomTheme.containerBackgroundColor,
-          borderRadius: BorderRadius.circular(24),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black45,
-              offset: Offset(0, 12),
-              blurRadius: 36
-            )
-          ]
-        ),
-        child: buildCustomScaffoldChild(context)
-      )
+    final Widget builtChildWidget = Container(
+      width: 900,
+      height: expandChildContainer ? null : 450,
+      padding: const EdgeInsets.all(32),
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(
+        color: CustomTheme.containerBackgroundColor,
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black45,
+            offset: const Offset(0, 12),
+            blurRadius: 36
+          )
+        ]
+      ),
+      child: buildCustomScaffoldChild(context)
     );
 
-    final Widget madeWithFlutterWidget = Row(
+    final Widget builtFlutterWidget = Row(
       spacing: CustomTheme.normalSpacing,
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -58,15 +56,14 @@ abstract class CustomScaffold extends StatelessWidget {
     return Material(
       color: CustomTheme.backgroundColor,
       child: Padding(
-        padding: const EdgeInsets.all(64),
+        padding: const EdgeInsets.all(CustomTheme.xxLargeSpacing),
         child: Column(
-          spacing: CustomTheme.xxxLargeSpacing,
+          spacing: CustomTheme.xxLargeSpacing,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            titleWidget,
-            Expanded(
-              child: childWidget
-            ),
-            madeWithFlutterWidget
+            builtTitleWidget,
+            Flexible(child: builtChildWidget),
+            builtFlutterWidget
           ]
         )
       )

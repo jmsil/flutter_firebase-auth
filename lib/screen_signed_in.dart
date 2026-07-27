@@ -19,6 +19,7 @@ class ScreenSignedIn extends CustomScaffold {
   Widget buildCustomScaffoldChild(BuildContext context) {
     return Column(
       spacing: CustomTheme.xxLargeSpacing,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Row(
           spacing: CustomTheme.xxLargeSpacing,
@@ -41,9 +42,7 @@ class ScreenSignedIn extends CustomScaffold {
             )
           ]
         ),
-        Expanded(
-          child: _TokenWidget()
-        )
+        Flexible(child: _TokenWidget())
       ]
     );
   }
@@ -90,11 +89,16 @@ class _TokenWidgetState extends State<_TokenWidget> {
 
     return Column(
       spacing: CustomTheme.normalSpacing,
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(Strings.token(expirationDateTime), style: CustomTheme.normalHintStyle),
-        Expanded(
-          child: SelectableText(token, style: CustomTheme.normalStyle)
+        Flexible(
+          child: SelectableText(
+            token,
+            style: CustomTheme.normalStyle,
+            selectionColor: CustomTheme.textSelectionColor
+          )
         ),
         CustomTheme.xLargeVerticalSpacer,
         _Claim(Strings.audience, audience),
@@ -125,13 +129,15 @@ class _Claim extends Row {
   _Claim(String claimName, String claimValue)
     : super(
         spacing: CustomTheme.normalSpacing,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(claimName, style: CustomTheme.normalHintStyle),
           Expanded(
             child: SelectableText(
               claimValue,
               style: CustomTheme.normalStyle,
-              textAlign: TextAlign.end,
+              selectionColor: CustomTheme.textSelectionColor,
+              textAlign: TextAlign.end
             )
           )
         ]
