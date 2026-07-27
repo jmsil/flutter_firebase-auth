@@ -6,6 +6,9 @@ import 'package:flutter/foundation.dart';
 
 enum AuthState {settings, signIn, signedIn}
 
+typedef IdTokenChangesCallback =
+  Function (String token, DateTime? expirationDateTime, String issuer, String audience);
+
 class AuthModel extends ChangeNotifier {
   static final AuthModel instance = AuthModel._();
 
@@ -76,11 +79,16 @@ class AuthModel extends ChangeNotifier {
     await FirebaseAuth.instance.currentUser?.getIdToken(true);
   }
 
-  static void registerListener(Function(String token, DateTime? expirationDateTime) callback) {
+  static void registerListener(IdTokenChangesCallback callback) {
     FirebaseAuth.instance.idTokenChanges().listen(
       (User? user) async {
         IdTokenResult? token = await user?.getIdTokenResult();
-        callback(token?.token ?? '', token?.expirationTime);
+        callback(
+          token?.token ?? '- - -',
+          token?.expirationTime,
+          token?.claims?['iss'] ?? '- - -',
+          token?.claims?['aud'] ?? '- - -'
+        );
       }
     );
   }

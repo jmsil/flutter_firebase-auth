@@ -57,6 +57,8 @@ class _TokenWidget extends StatefulWidget {
 class _TokenWidgetState extends State<_TokenWidget> {
   String token = '';
   DateTime? expirationDateTime;
+  String issuer = '';
+  String audience = '';
 
   @override
   void initState() {
@@ -66,6 +68,26 @@ class _TokenWidgetState extends State<_TokenWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final Widget builtButtonsWidget = Row(
+      spacing: CustomTheme.largeSpacing,
+      children: [
+        Expanded(
+          child: ProcessingButton(
+            icon: CustomTheme.refreshIcon,
+            text: Strings.refresh,
+            onPressed: AuthModel.refreshToken
+          )
+        ),
+        Expanded(
+          child: CustomButton(
+            icon: CustomTheme.copyIcon,
+            text: Strings.copy,
+            onPressed: onCopyPressed
+          )
+        )
+      ]
+    );
+
     return Column(
       spacing: CustomTheme.normalSpacing,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,25 +96,11 @@ class _TokenWidgetState extends State<_TokenWidget> {
         Expanded(
           child: SelectableText(token, style: CustomTheme.normalStyle)
         ),
-        Row(
-          spacing: CustomTheme.largeSpacing,
-          children: [
-            Expanded(
-              child: ProcessingButton(
-                icon: CustomTheme.refreshIcon,
-                text: Strings.refresh,
-                onPressed: AuthModel.refreshToken
-              )
-            ),
-            Expanded(
-              child: CustomButton(
-                icon: CustomTheme.copyIcon,
-                text: Strings.copy,
-                onPressed: onCopyPressed
-              )
-            )
-          ]
-        )
+        CustomTheme.xLargeVerticalSpacer,
+        _Claim(Strings.audience, audience),
+        _Claim(Strings.issuer, issuer),
+        CustomTheme.xLargeVerticalSpacer,
+        builtButtonsWidget
       ]
     );
   }
@@ -101,10 +109,31 @@ class _TokenWidgetState extends State<_TokenWidget> {
     Clipboard.setData(ClipboardData(text: token));
   }
 
-  void onTokenChangesCallback(String token, DateTime? expirationDateTime) {
+  void onTokenChangesCallback(String token, DateTime? expirationDateTime, String issuer,
+    String audience)
+  {
     setState(() {
       this.token = token;
       this.expirationDateTime = expirationDateTime;
+      this.issuer = issuer;
+      this.audience = audience;
     });
   }
+}
+
+class _Claim extends Row {
+  _Claim(String claimName, String claimValue)
+    : super(
+        spacing: CustomTheme.normalSpacing,
+        children: [
+          Text(claimName, style: CustomTheme.normalHintStyle),
+          Expanded(
+            child: SelectableText(
+              claimValue,
+              style: CustomTheme.normalStyle,
+              textAlign: TextAlign.end,
+            )
+          )
+        ]
+      );
 }

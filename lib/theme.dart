@@ -8,6 +8,8 @@ class CustomTheme {
   static const double xxLargeSpacing = 48;
   static const double xxxLargeSpacing = 128;
 
+  static const SizedBox xLargeVerticalSpacer = SizedBox(height: xLargeSpacing);
+
   static const Color highlightColor = Colors.white;
   static const Color overHighlightColor = Colors.black;
   static const Color backgroundColor = Color(0xFF121212);

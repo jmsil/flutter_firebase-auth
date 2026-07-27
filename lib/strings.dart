@@ -5,9 +5,11 @@ class Strings {
   static const String ok = 'Ok';
   static const String copy = 'Copy';
   static const String error = 'Error';
+  static const String issuer = 'Issuer';
   static const String userId = 'User ID';
   static const String refresh = 'Refresh';
   static const String signOut = 'Sign Out';
+  static const String audience = 'Audience';
   static const String settings = 'Settings';
   static const String initialize = 'Initialize';
   static const String signInWithGoogle = 'Sign In with Google';
